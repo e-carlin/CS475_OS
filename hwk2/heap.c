@@ -9,6 +9,9 @@
 #include "employee.h"
 #include "heap.h"
 
+//Helper prototypes
+static int getIndexLeftChild(int);
+static int getIndexRightChild(int);
 
 /**
  * Sorts a list of n employees in descending order
@@ -18,13 +21,17 @@
  */
 void heapSort(struct Employee *A, int n)
 {
-	//TODO - BuildHeap on the list
-	
-	//TODO - while n > 0:
-		//TODO - swap A[n-1] with A[0], since A[0] is the smallest number.
-		//TODO - A[n-1] now sorted in place!
-		//TODO - So decrement n
-		//TODO - Heapify the elements from A[0] up to A[n-1] (which leaves the newly sorted element alone)
+	//BuildHeap on the list
+	buildHeap(A, n);
+
+	while(n>0){
+		//A[0] is the smallest element due to min-heap property so put it at n-1 and it is now sorted 
+		swap(&A[n-1], &A[0]);
+		//No longer need to worry about it so decrement n
+		n--;
+		//Find the next smalles element after running heapify() it will be at A[0]
+		heapify(A, 0, n);
+	}
 }
 
 
@@ -39,6 +46,10 @@ void heapSort(struct Employee *A, int n)
 void buildHeap(struct Employee *A, int n)
 {
 	//TODO - heapify() every element from A[n/2] to A[0]
+	int i;
+	for(i=n/2; i>-1; i--){
+		heapify(A, i, n);
+	}
 }
 
 
@@ -50,18 +61,38 @@ void buildHeap(struct Employee *A, int n)
  * @param	i	Index of current element to heapify
  * @param	n	Size of the list
  */
-void heapify(struct Employee *A, int i, int n)
-{
-	//TODO - get index of left child of element i
-	//TODO - get index of right child of element i
+ void heapify(struct Employee *A, int i, int n)
+ {
+ 	//Left child of i
+ 	int leftChild = getIndexLeftChild(i);
+ 	//right child of i
+ 	int rightChild = getIndexRightChild(i);
 
-	//TODO - determine which child has a smaller salary. We'll call the index of this
-	//		element: "smaller"
+ 	//If leftChild < n then there are still elements we might want to swap with
+ 	if(leftChild < n){
 
-	//TODO - recursively check if the salary at A[i] > the salary at A[smaller]. If it is, swap the two.
-	//			Then recursively heapify A[smaller].
-	//TODO - Continue recursion as long as i is within range AND either right_child and left_child are still within range.
-}
+ 		//If rightChild < n then we need to find the child with smalles salary
+ 		if(rightChild < n){
+ 			//Find child with smallest salary
+ 			int smallerChild = A[leftChild].salary < A[rightChild].salary ? leftChild : rightChild;
+ 			//If i's salary is > than the child with the smallest salary then swap and recurse
+ 			if( A[i].salary > A[smallerChild].salary){
+ 				//Swap
+ 				swap(&A[i], &A[smallerChild]);
+ 				//recurse on child
+ 				heapify(A, smallerChild, n);
+ 			}
+ 	}
+ 	//rightChild is out of bounds so we can only swap with left
+ 	else{
+ 		//If i's salary is > leftChild's salary then swap and recurse
+ 		if(A[i].salary > A[leftChild].salary){
+ 			swap(&A[i], &A[leftChild]);
+ 			heapify(A, leftChild, n);
+ 		}
+ 	}	 
+ 	}
+ }
 
 /**
  * Gets the minimally paid employee. Assumes the given list is a min-heap.
@@ -71,7 +102,7 @@ void heapify(struct Employee *A, int i, int n)
  */
 struct Employee *getMinPaidEmployee(struct Employee *A, int n)
 {
-	//TODO
+	return &A[0];
 }
 
 
@@ -82,7 +113,9 @@ struct Employee *getMinPaidEmployee(struct Employee *A, int n)
  */
 void swap(struct Employee *e1, struct Employee *e2)
 {
-	//TODO 
+	struct Employee temp = *e1;
+	*e1 = *e2;
+	*e2 = temp;
 }
 
 /**
@@ -92,5 +125,28 @@ void swap(struct Employee *e1, struct Employee *e2)
  */
 void printList(struct Employee *A, int n)
 {
-	//TODO
+	int i;
+	printf("[ ");
+	for(i=0; i<n-1; i++){
+		printf("id= %s sal= %d, ", A[i].name, A[i].salary);
+	}
+	printf("id= %s sal= %d ]\n", A[n-1].name, A[n-1].salary);
 }
+
+
+//************** static helpers ******************
+static int getIndexLeftChild(i){
+	return 2 * (i+1) -1;
+}
+
+static int getIndexRightChild(i){
+	return 2 * (i+1);
+}
+
+// *
+// * Determines if i is a valid index in array of size n
+// * @param i the index we want to check
+// * @param n the size of the heap
+// * @return 1 for true 0 for false
+// *
+// static int isValidIndex(int n)
