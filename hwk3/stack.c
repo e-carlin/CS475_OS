@@ -7,18 +7,22 @@
 * @return the size of the stack
 */
 int size(Stack s){
-	return s.size;
+	int size = 0;
+
+	StackElem *elem = s.head;
+	while(elem != NULL){
+		size++;
+		elem = elem->next;
+	}
+	return size;
 }
 
 /*
 * Push an element onto the stack
 */
 void push(Stack *s, float value){
-	printf("In push\n");
-
 	//Stack is empty
-	if(s->root == NULL){
-		printf("Adding first elem to stack\n");
+	if(s->head == NULL){
 		//Allocate space for new elem
 		StackElem *elem = (StackElem *) malloc(sizeof(StackElem));
 		
@@ -26,22 +30,34 @@ void push(Stack *s, float value){
 		elem->value = value;
 		elem->next = NULL;
 
-		//Set root of stack to be new elem
-		s->root = elem;
+		//Set head of stack to be new elem
+		s->head = elem;
 	}
 	else{
-		printf("Stack is not empty, adding another elem\n");
 		//Allocate space for new elem
 		StackElem *elem = (StackElem *) malloc(sizeof(StackElem));
 
 		//Assign fields
 		elem->value = value;
-		elem->next = s->root;
-		s->root = elem;
+		elem->next = s->head;
+		s->head = elem;
 	}
-	printf("Done pushing\n");
 }
 
-float pop(Stack *s){
-	return 666.666;
+StackElem *pop(Stack *s){
+	StackElem *head = s->head;
+	s->head = head->next;
+	return head;
+}
+
+
+void printStack(Stack s){
+	printf("*********** Printing stack **************\n");
+	printf("Stack size is %d\n", size(s));
+	StackElem *elem = s.head;
+	while(elem != NULL){
+		printf("%f -> ", elem->value);
+		elem = elem->next;
+	}
+	printf("\n");
 }

@@ -1,10 +1,10 @@
-all: main.c rpn.h rpn.o
-	gcc -Wall -o calculator main.c rpn.o stack.o
+all: stack.o rpn.o main.c
+	gcc -Wall -o calculator main.c stack.o rpn.o
 
-rpn.o: rpn.c rpn.h stack.o
-	gcc -Wall -c rpn.c
+rpn.o: rpn.c stack.o
+	gcc -Wall -c rpn.c stack.o
 
-stack.o: stack.c stack.h
+stack.o: stack.c
 	gcc -Wall -c stack.c
 
 clean:

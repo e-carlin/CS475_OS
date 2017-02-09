@@ -4,10 +4,10 @@ typedef struct StackElem{
 } StackElem;
 
 typedef struct Stack{
-	StackElem *root; //Pointer to topmost element of stack
-	int size;
+	StackElem *head; //Pointer to topmost element of stack
 } Stack;
 
 int size(Stack);
 void push(Stack *, float);
-float pop(Stack*);
+StackElem *pop(Stack*);
+void printStack(Stack);
