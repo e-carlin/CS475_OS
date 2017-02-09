@@ -1,5 +1,10 @@
+/*
+* @author Evan Carlin
+* A linked-list implementation of a stack.
+* Support push, pop, and size
+*/
 #include <stdlib.h>
-#include <stdio.h> //TODO: Remove, just for testing
+#include <stdio.h>
 #include "stack.h"
 
 /*
@@ -19,6 +24,8 @@ int size(Stack s){
 
 /*
 * Push an element onto the stack
+* @param *s, the stack we want to push the elem on
+* @param value, the value to be pushed onto the stack
 */
 void push(Stack *s, float value){
 	//Stack is empty
@@ -44,6 +51,11 @@ void push(Stack *s, float value){
 	}
 }
 
+/*
+* Pops the head off the stack and returns it
+* @param *s, the stack we wish to pop from
+* @return the head of the stack
+*/
 StackElem *pop(Stack *s){
 	StackElem *head = s->head;
 	s->head = head->next;
@@ -51,6 +63,9 @@ StackElem *pop(Stack *s){
 }
 
 
+/*
+* Prints out the values in the stack
+*/
 void printStack(Stack s){
 	printf("*********** Printing stack **************\n");
 	printf("Stack size is %d\n", size(s));

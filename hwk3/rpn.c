@@ -1,4 +1,5 @@
 /*
+* @author Evan Carlin
 * Pareses a string in Reverse Polish Notation
 * and calculates the result. Supports +, -, *, and /.
 */
@@ -80,6 +81,11 @@ StackElem *calculate(char *input){
 	}
 }
 
+/*
+* Checks if the operator is a supported operator
+* +, -, *, /
+* @return 1 if it is 0 if not
+*/
 int isValidOperator(char op){
 	return (op == '+' ||
 		op == '-' ||
@@ -87,6 +93,12 @@ int isValidOperator(char op){
 		op == '/') ? 1 : 0;
 }
 
+/*
+* Performs the given operation on the given values
+* @param head, the value head from the stack
+* @param next, the value of next from the stack
+* @param op, the operation we wish to perform 
+*/
 float performOp(float head, float next, char op){
 	if(op == '+')
 		return next + head;
@@ -94,7 +106,7 @@ float performOp(float head, float next, char op){
 		return next - head;
 	if(op == '*')
 		return next * head;
-	if(op == '/'){
+	else{
 		if(head == 0.0){
 			printf("Error: division by 0\n");
 			exit(1);
@@ -102,6 +114,5 @@ float performOp(float head, float next, char op){
 		else
 			return next / head;
 	}
-	return 666.666;
 }
  
