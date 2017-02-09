@@ -45,7 +45,6 @@ void heapSort(struct Employee *A, int n)
  */
 void buildHeap(struct Employee *A, int n)
 {
-	//TODO - heapify() every element from A[n/2] to A[0]
 	int i;
 	for(i=n/2; i>-1; i--){
 		heapify(A, i, n);
@@ -135,18 +134,20 @@ void printList(struct Employee *A, int n)
 
 
 //************** static helpers ******************
-static int getIndexLeftChild(i){
+/**
+* Get the index of the left child of node with index i
+* @param i Index of the element we want to find the left child of
+* @return the index of the left child
+*/
+static int getIndexLeftChild(int i){
 	return 2 * (i+1) -1;
 }
 
-static int getIndexRightChild(i){
+/**
+* Get the index of the right child of a noded at index i
+* @param i Index of the element we want to find the right child of
+* @return Index of the left child
+*/
+static int getIndexRightChild(int i){
 	return 2 * (i+1);
 }
-
-// *
-// * Determines if i is a valid index in array of size n
-// * @param i the index we want to check
-// * @param n the size of the heap
-// * @return 1 for true 0 for false
-// *
-// static int isValidIndex(int n)

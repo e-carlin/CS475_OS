@@ -23,7 +23,7 @@ int main()
 
 		printf("Salary: ");
 		scanf("%d", &emp.salary);
-		getchar();
+		getchar(); //Clear buffer on \n
 
 		//Add this employee to the list
 		employees[numEmployees] = emp;
@@ -34,7 +34,7 @@ int main()
 			break;
 		printf("Enter another user (y/n): ");
 		scanf(" %c", &promptAgain);
-		getchar();
+		getchar(); //clear buffer of \n
 		printf("\n");
 
 
