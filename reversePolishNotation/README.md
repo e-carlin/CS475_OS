@@ -1,3 +1,5 @@
+#Reverse Polish Notation Calculator
+
 Evan Carlin
 2/12/2017
 
@@ -17,5 +19,5 @@ To clean:
 	$ make clean
 
 Note:
-This was compiled on the provided VM using
-gcc. 
+This was compiled on the provided 32-Bit Ubuntu  
+image using gcc. 

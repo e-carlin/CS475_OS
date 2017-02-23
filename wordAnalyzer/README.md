@@ -1,7 +1,9 @@
+#Word Analyzer
+
 Evan Carlin
 1/27/2017
 
-My program is a simple word analyzer. The user can enter
+This is a word analyzer program. The user can enter
 strings of words and the program analyzes vowel count,
 consonant count, word count, and character count. The 
 program only analyzes characters A-Z and a-z. Any word
