@@ -1,3 +1,6 @@
-Homework and projects for Operating Systems (CS475)
+#Operating Systems (CS475)
 
-Using the Xinu kernel.
+This repo contains two types of programs:
+1. Simple C programs to learn the language
+2. Hacking projects on the **Xinu** Kernel
+
