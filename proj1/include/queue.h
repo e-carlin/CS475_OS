@@ -25,7 +25,7 @@ struct queue
 struct qentry
 {
 	pid32 pid;
-	struct qentry *previous;
+	struct qentry *prev;
 	struct qentry *next;
 };
 

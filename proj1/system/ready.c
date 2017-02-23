@@ -20,9 +20,11 @@ status	ready(pid32 pid, bool8 resch)
 	// set process state to indicate ready and add to ready list
 	prptr = &proctab[pid];
 
-	// TODO - set the process' state pointed by prptr to "ready"
+	//Set the process' state pointed by prptr to "ready"
+	prptr->prstate = PR_READY;
 
-	// TODO - enqueue the process
+	//Enqueue the process
+	enqueue(pid, readyqueue);
 
 	if (resch == RESCHED_YES)
 		resched();
