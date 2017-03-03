@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <string.h>
+#include "stack.h"
 #include "shell.h"
 #include "main.h"
 
 
 
+
 int main(){
+	Stack s;
+	s.head = NULL;
 	char inputStream[MAX_INPUT];
 
 	//Print the message of the day
@@ -19,7 +23,7 @@ int main(){
 		if(strcmp(inputStream, "\n") == 0){
 			continue;
 		}
-		processCommand(inputStream);
+		processCommand(inputStream, &s);
 		printf("\n");
 	}
 }
