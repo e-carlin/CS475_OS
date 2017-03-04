@@ -17,3 +17,4 @@ int isBuiltIn(char*, Stack*);
 
 #define MAX_NUM_ARGS 25
 #define HISTORY_LEN 100
+#define MAX_INPUT_LEN 256
