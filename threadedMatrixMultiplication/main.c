@@ -6,15 +6,15 @@ int main(){
 	int **m2 = generateRandomMatrix(3);
 
 	printf("M1\n");
-	printMatrix(m1, 3);
+	printMatrix(m1, 3, 3);
 
 	printf("\nM2\n");
-	printMatrix(m2, 3);
+	printMatrix(m2, 3, 3);
 
 
-	int **result = matrixMultiplication(m1, m2, 3, 3);
+	int **result = matrixMultiplication(m1, m2, 2, 3, 3);
 	printf("\nResult\n");
-	printMatrix(result, 3);
+	printMatrix(result, 1, 3);
 
 	return 1;
 }
