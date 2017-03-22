@@ -31,7 +31,7 @@ int main(){
 		if(strcmp(inputStream, "\n") == 0){
 			continue;
 		}
-		processCommand(inputStream, &s);
+		processCommand(inputStream, &s);                
 		printf("\n");
 	}
 }
