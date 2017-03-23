@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "matrixMultiplication.h"
+
 /*
 * @param m1 one of the matrices to be mutiplied
 * @param m2 the other matrix to be multiplied
@@ -21,7 +22,6 @@ int **matrixMultiplication(int **m1, int **m2, int startResultRow, int endResult
 	        }
 	    }
 	}
-
 	return output;
 }
 
