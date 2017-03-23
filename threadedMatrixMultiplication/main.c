@@ -8,7 +8,12 @@
 #include "main.h"
 
 #define usage "Usage: ./mmm <mode> [num threads] <size>"
+#define numTimesToRun 3
 
+/*
+* Prompts the user to run sequential vs parallel matrix multiplication
+* and displays execution time differences.
+*/
 int main(int argc, char *argv[]){
 	struct timezone Tzp;
 	struct timeval Tp;
@@ -36,14 +41,13 @@ int main(int argc, char *argv[]){
 		double endTime = getTime(Tzp,Tp);
 
 		printf("Sequential time: %f\n", endTime - startTime);
-
-		// printf("\nSequential Result\n");
-		// printMatrix(sequentialMultiplication, dim, dim);
 		return 0;
 	}
 
 	//Want to do parallel computations
 	else if(argc == 4 && strcmp(argv[1], "P") == 0){
+		int i;
+		double startTime, endTime;
 		int dim = atoi(argv[3]);
 		int threadCount = atoi(argv[2]);
 
@@ -58,33 +62,47 @@ int main(int argc, char *argv[]){
 		int **m2 = generateRandomMatrix(dim);
 
 		//Do sequential multiplication
-		double sequentialStartTime = getTime(Tzp, Tp);
-		int **sequentialMultiplicationResult = sequentialMatrixMultiplication(m1, m2, dim);
-		double sequentialEndTime = getTime(Tzp,Tp);
-		printf("Sequential time: %f\n", sequentialEndTime - sequentialStartTime);
+		double totalSequentialRunTime;
+		int **sequentialMultiplicationResult;
 
-		//Do parallel multiplication
-		double parallelStartTime = getTime(Tzp, Tp);
-		int **parallelMultiplicationResult = parallelMatrixMultiplication(m1, m2, dim, threadCount);
-		double parallelEndTime = getTime(Tzp,Tp);
-		printf("parallel time: %f\n", parallelEndTime - parallelStartTime);
+		for(i=0; i<numTimesToRun+1; i++){
+			startTime = getTime(Tzp, Tp);
+			sequentialMultiplicationResult = sequentialMatrixMultiplication(m1, m2, dim);
+			endTime = getTime(Tzp,Tp);
+
+			//Only keep results after the first run to allow the cache to warm up
+			if(i != 0){
+				totalSequentialRunTime += endTime - startTime;
+			}
+		}
 		
 
-		printf("***** SEQUENTIAL *******\n");
-		printMatrix(sequentialMultiplicationResult, dim, dim);
-		printf("************************\n\n");
+		//Do parallel multiplication
+		double totalParallelRunTime;
+		int **parallelMultiplicationResult;
 
-		printf("****** PARALLEL **********\n");
-		printMatrix(parallelMultiplicationResult, dim, dim);
-		printf("**************************\n\n");
+		for(i=0; i<numTimesToRun+1; i++){
+			startTime = getTime(Tzp, Tp);
+			parallelMultiplicationResult = parallelMatrixMultiplication(m1, m2, dim, threadCount);
+			endTime = getTime(Tzp,Tp);
 
+			if(i != 0){
+				totalParallelRunTime += endTime - startTime;
+			}
+		}
 
-		//TODO: change this to actually evaluate the parallel vs sequential matrices
+		//Calculate the max difference between the two matrices
 		double maxDifference = maxMatrixDifference(sequentialMultiplicationResult, parallelMultiplicationResult, dim);
+
+		//Display results
+		printf("Sequential time: %f\n", totalSequentialRunTime / numTimesToRun);
+		printf("Parallel time: %f\n", totalParallelRunTime / numTimesToRun);
+		printf("Speedup: %f\n", totalSequentialRunTime / totalParallelRunTime);
 		printf("Verifying... largest error between parallel and sequential multiplication %f\n", maxDifference);
+
 		return 0;
 	}
-
+	//The input arguments were invalid
 	else{
 		printf("%s\n", usage);
 		exit(1);
@@ -93,6 +111,9 @@ int main(int argc, char *argv[]){
 	return 1;
 }
 
+/*
+* Gets the current time in seconds
+*/
 double getTime(	struct timezone Tzp, struct timeval Tp){
 	int stat;
 
