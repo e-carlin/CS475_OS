@@ -1,1 +1,0 @@
-int **serialMatrixMultiplication(int **m1, int **m2, int dim);

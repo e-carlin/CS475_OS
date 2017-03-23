@@ -3,7 +3,7 @@
 #include <string.h>
 #include <sys/time.h>
 #include "matrixMultiplication.h"
-#include "serialMatrixMultiplication.h"
+#include "sequentialMatrixMultiplication.h"
 #define usage "Usage: ./mmm <mode> [num threads] <size>"
 
 int main(int argc, char *argv[]){
@@ -15,9 +15,9 @@ int main(int argc, char *argv[]){
 
 
 
-	//Want to do serial multiplication
+	//Want to do sequential multiplication
 	if(argc == 3 && strcmp(argv[1], "S") == 0){
-		printf("*****Serial****\n");
+		printf("*****sequential****\n");
 		printf("%s\n", argv[2]);
 		int dim = atoi(argv[2]);
 		printf("%d\n", dim);
@@ -26,9 +26,9 @@ int main(int argc, char *argv[]){
 		int **m1 = generateRandomMatrix(dim);
 		int **m2 = generateRandomMatrix(dim);
 
-		int **serialMultiplication = serialMatrixMultiplication(m1, m2, dim);
-		printf("\nSerial Result\n");
-		printMatrix(serialMultiplication, dim, dim);
+		int **sequentialMultiplication = sequentialMatrixMultiplication(m1, m2, dim);
+		printf("\nSequential Result\n");
+		printMatrix(sequentialMultiplication, dim, dim);
 
 		gettimeofday (&Tp, &Tzp);
 		printf("end %f\n", Tp.tv_sec + Tp.tv_usec*1.0e-6);
