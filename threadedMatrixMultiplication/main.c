@@ -26,13 +26,9 @@ int main(int argc, char *argv[]){
 		int **m1 = generateRandomMatrix(dim);
 		int **m2 = generateRandomMatrix(dim);
 
-		int **result = matrixMultiplication(m1, m2, 0, dim, dim);
-		printf("\nResult\n");
-		printMatrix(result, dim, dim);
-
-		int **serialRes = serialMatrixMultiplication(m1, m2, dim);
-		printf("\nSerial Res\n");
-		printMatrix(serialRes, dim, dim);
+		int **serialMultiplication = serialMatrixMultiplication(m1, m2, dim);
+		printf("\nSerial Result\n");
+		printMatrix(serialMultiplication, dim, dim);
 
 		gettimeofday (&Tp, &Tzp);
 		printf("end %f\n", Tp.tv_sec + Tp.tv_usec*1.0e-6);
