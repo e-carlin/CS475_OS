@@ -1,0 +1,1 @@
+double getTime(	struct timezone Tzp, struct timeval Tp);

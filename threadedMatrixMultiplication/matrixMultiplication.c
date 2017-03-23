@@ -7,7 +7,7 @@
 * @param m1 one of the matrices to be mutiplied
 * @param m2 the other matrix to be multiplied
 * @param startResultRow the starting row we wish to calculate the result for (0 indexed, inclusive)
-* @param endResultRow the ending row we wish to calculate the resutl for (0 indexed, exclusive)
+* @param endResultRow the ending row we wish to calculate the result for (0 indexed, exclusive)
 * @param dim the dimensions of the input arrays (assumed to be the same dimensions and squar)
 * @return the resulting rows we wanted to calculate 
 */
@@ -89,3 +89,16 @@ int **mallocMatrix(int row, int col){
      return matrix;
 }
 
+double maxMatrixDifference(int **m1, int **m2, int dim){
+	double maxDifference = abs(m1[0][0] - m2[0][0]);
+
+	int i,j;
+	for(i=0; i<dim; i++){
+		for(j=0; j<dim; j++){
+			if(abs(m1[i][j] - m2[i][j]) > maxDifference){
+				maxDifference = abs(m1[i][j] - m2[i][j]);
+			}
+		}
+	}
+	return maxDifference;
+}
