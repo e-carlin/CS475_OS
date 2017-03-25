@@ -18,9 +18,6 @@ int main(int argc, char *argv[]){
 	struct timezone Tzp;
 	struct timeval Tp;
 
-
-
-
 	//Want to do sequential multiplication
 	if(argc == 3 && strcmp(argv[1], "S") == 0){
 		int dim = atoi(argv[2]);
@@ -76,7 +73,6 @@ int main(int argc, char *argv[]){
 			}
 		}
 		
-
 		//Do parallel multiplication
 		double totalParallelRunTime;
 		int **parallelMultiplicationResult;
