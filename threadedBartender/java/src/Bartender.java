@@ -1,4 +1,5 @@
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Bartender extends Thread {
 
@@ -49,7 +50,8 @@ public class Bartender extends Thread {
 
             System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t| \t\tsrc.Bartender");
 
-            //TODO: Sleep for time to mix drink
+            //Sleep for time to mix drink
+            Thread.sleep(ThreadLocalRandom.current().nextInt(5, 1000 + 1));
 
             //Order is ready
             this.orderReady.release();

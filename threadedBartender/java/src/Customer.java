@@ -1,4 +1,5 @@
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Customer extends Thread {
 
@@ -38,11 +39,12 @@ public class Customer extends Thread {
         }
     }
 
-    private void travelToBar() {
+    private void travelToBar() throws InterruptedException {
 
         System.out.println("src.Customer " + id + "\t\t\t\t\t\t\t\t\t\t\t|");
 
-        //TODO: Wait a random travel time
+        //Wait a random travel time
+        Thread.sleep(ThreadLocalRandom.current().nextInt(20, 5000 + 1));
 
         //Let the bartender know someone is here
         customerHere.release();
@@ -63,8 +65,10 @@ public class Customer extends Thread {
         orderPlaced.release();
     }
 
-    private void browseArt() {
+    private void browseArt() throws InterruptedException {
         System.out.println("\t\t\t\t\t\tsrc.Customer " + id + "\t\t\t\t\t|");
+
+        Thread.sleep(ThreadLocalRandom.current().nextInt(3, 4000 + 1));
 
     }
 
