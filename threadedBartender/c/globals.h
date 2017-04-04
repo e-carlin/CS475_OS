@@ -9,8 +9,11 @@
 #define GLOBALS_H_
 
 int num_threads;	// number of customer threads
-int now_serving;	// customer's ID who is being served
+int nowServing;	// customer's ID who is being served
 
-//TODO - declare some semaphores
+//Semaphores
+sem_t* customerHere;
+sem_t* roomToEnterBar;
+sem_t* orderPlaced;
 
 #endif /* GLOBALS_H_ */

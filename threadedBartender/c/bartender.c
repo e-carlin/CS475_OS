@@ -18,8 +18,8 @@
  * Code for bartender thread.
  * Do not touch.
  */
-void* bartender(void* args)
-{
+void* bartender(void* args){
+	
 	int i;
 	for (i = 0; i<num_threads; i++)
 	{
@@ -33,10 +33,13 @@ void* bartender(void* args)
 /**
  * Waits in a closet until a customer enters.
  */
-void waitForCustomer()
-{
-	//TODO - synchronize
+void waitForCustomer(){ 
+
+	//Show tender is waiting
 	printf("\t\t\t\t\t\t\t\t\t\t\t| Bartender\n");
+
+	//Wait for a customer to enter
+	sem_wait(customerHere);
 }
 
 
@@ -44,9 +47,17 @@ void waitForCustomer()
  * When a customer places an order it takes the Bartender
  * a random amount of time between 5 ms and 1000 ms to make the drink.
  */
-void makeDrink()
-{
-	//TODO - synchronize
+void makeDrink(){
+
+	//Let in a customer
+	sem_post(roomToEnterBar);
+	
+	//Wait for customer to place order
+	sem_wait(orderPlaced);
+
+	//TODO: Wait random time to make drink
+
+	//Show tender is making a drink
 	printf("\t\t\t\t\t\t\t\t\t\t\t| \t\tBartender\n");
 }
 
@@ -54,12 +65,14 @@ void makeDrink()
 /**
  * Gets payment from the correct customer
  */
-void receivePayment()
-{
+void receivePayment(){
+
 	//TODO - synchronize
 	//at the register waiting for customer to pay
 	printf("\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\tBartender\n");
 
 	//got the payment from the right customer!
 	printf("\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\t\t\tBartender\n");
+
+	//Let in another customer
 }

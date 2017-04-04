@@ -19,8 +19,8 @@
  * This is what the thread will call.
  * Do not touch.
  */
-void* customer(void* args)
-{
+void* customer(void* args){
+
 	unsigned int *custID = (unsigned int*) args;
 	custTravelToBar(*custID);
 	custArriveAtBar(*custID);
@@ -35,10 +35,10 @@ void* customer(void* args)
 /**
  * Each customer takes a random amount of time between 20 ms and 5000 ms to travel to the bar.
  */
-void custTravelToBar(unsigned int custID)
-{
-	//TODO - synchronize
+void custTravelToBar(unsigned int custID){
+
 	printf("Cust %u\t\t\t\t\t\t\t\t\t\t\t|\n", custID);
+	sem_post(customerHere);
 }
 
 
@@ -46,30 +46,32 @@ void custTravelToBar(unsigned int custID)
  * If there is already another customer in the bar the current customer has
  * to wait until bar is empty before entering.
  */
-void custArriveAtBar(unsigned int custID)
-{
-	//TODO - synchronize
+void custArriveAtBar(unsigned int custID){
+
 	printf("\t\tCust %u\t\t\t\t\t\t\t\t\t|\n", custID);
+
+	//Wait for space in the bar
+	sem_wait(roomToEnterBar);
 }
 
 
 /**
  * The customer in the bar places an order
  */
-void custPlaceOrder()
-{
-	//TODO - synchronize
-	printf("\t\t\t\tCust %u\t\t\t\t\t\t\t|\n", now_serving);
+void custPlaceOrder(){
+
+	printf("\t\t\t\tCust %u\t\t\t\t\t\t\t|\n", nowServing);
+	sem_post(orderPlaced);
 }
 
 
 /**
  * The customer in the bar can browse the wall art for a random amount of time between 3ms and 4000ms.
  */
-void custBrowseArt()
-{
+void custBrowseArt(){
+
 	//TODO - synchronize
-	printf("\t\t\t\t\t\tCust %u\t\t\t\t\t|\n", now_serving);
+	printf("\t\t\t\t\t\tCust %u\t\t\t\t\t|\n", nowServing);
 }
 
 
@@ -78,18 +80,18 @@ void custBrowseArt()
  * until the bartender has finished. When the bartender is finished, the customer pays.
  *
  */
-void custAtRegister()
-{
+void custAtRegister(){
+
 	//TODO - synchronize
-	printf("\t\t\t\t\t\t\t\tCust %u\t\t\t|\n", now_serving);
+	printf("\t\t\t\t\t\t\t\tCust %u\t\t\t|\n", nowServing);
 }
 
 
 /**
  * The customer in the bar leaves the bar.
  */
-void custLeaveBar()
-{
+void custLeaveBar(){
+	
 	//TODO - synchronize
-	printf("\t\t\t\t\t\t\t\t\t\tCust %u\t|\n", now_serving);
+	printf("\t\t\t\t\t\t\t\t\t\tCust %u\t|\n", nowServing);
 }
