@@ -2,7 +2,7 @@ Evan Carlin
 4/7/2017 
 
 
-A threaded implementation of a bar.  
+A threaded implementation of a bar in C.  
 Only 2 people are allowed in the bar
 at any time, the bartender and one 
 customer. The bartender and each customer
