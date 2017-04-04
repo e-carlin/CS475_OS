@@ -36,14 +36,18 @@ int main(int argc, char** argv)
 		exit(1);
 	}
 
+	//Create array for customer threads
 	num_threads = atoi(argv[1]);
 	pthread_t *customerThreads = (pthread_t*) malloc(sizeof(pthread_t) * num_threads);
+	//Create an array for their id args
+	int *threadIDs = (int *) malloc(sizeof(int) * num_threads);
 	
 
 	int i;
 	for(i=0; i<num_threads; i++){
 		//TODO: the arg for customer is wrong
-		pthread_create(&customerThreads[i], NULL, customer, &i);
+		threadIDs[i] = i;
+		pthread_create(&customerThreads[i], NULL, customer, &threadIDs[i]);
 
 	}
 
@@ -95,8 +99,8 @@ void init()
 	//Create semaphores
 	customerHere = sem_open("/customerHere", O_CREAT, 0600, 0);
 	roomToEnterBar = sem_open("/roomToEnterBar", O_CREAT, 0600, 0);
-	orderPlaced = sem_open("orderPlaced/", O_CREAT, 0600, 0);
-	// = sem_open("/", O_CREAT, 0600, 0);
+	orderPlaced = sem_open("/orderPlaced", O_CREAT, 0600, 0);
+	orderReady = sem_open("/orderReady", O_CREAT, 0600, 0);
 	// = sem_open("/", O_CREAT, 0600, 0);
 	// = sem_open("/", O_CREAT, 0600, 0);
 }
@@ -110,14 +114,14 @@ void cleanup()
 	sem_close(customerHere);
 	sem_close(roomToEnterBar);
 	sem_close(orderPlaced);
-	// sem_close();
+	sem_close(orderReady);
 	// sem_close();
 	// sem_close();
 
 	sem_unlink("/customerHere");
 	sem_unlink("/roomToEnterBar");
 	sem_unlink("/orderPlaced");
-	// sem_unlink("/");
+	sem_unlink("/orderReady");
 	// sem_unlink("/");
 	// sem_unlink("/");
 }

@@ -52,6 +52,9 @@ void custArriveAtBar(unsigned int custID){
 
 	//Wait for space in the bar
 	sem_wait(roomToEnterBar);
+
+	//Customer has been let in so let everyone know bartender is serving them 
+	nowServing = custID;
 }
 
 
@@ -82,6 +85,7 @@ void custBrowseArt(){
  */
 void custAtRegister(){
 
+	sem_wait(orderReady);
 	//TODO - synchronize
 	printf("\t\t\t\t\t\t\t\tCust %u\t\t\t|\n", nowServing);
 }
@@ -91,7 +95,7 @@ void custAtRegister(){
  * The customer in the bar leaves the bar.
  */
 void custLeaveBar(){
-	
+
 	//TODO - synchronize
 	printf("\t\t\t\t\t\t\t\t\t\tCust %u\t|\n", nowServing);
 }

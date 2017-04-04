@@ -15,5 +15,6 @@ int nowServing;	// customer's ID who is being served
 sem_t* customerHere;
 sem_t* roomToEnterBar;
 sem_t* orderPlaced;
+sem_t* orderReady;
 
 #endif /* GLOBALS_H_ */

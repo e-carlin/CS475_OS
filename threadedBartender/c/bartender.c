@@ -19,7 +19,7 @@
  * Do not touch.
  */
 void* bartender(void* args){
-	
+
 	int i;
 	for (i = 0; i<num_threads; i++)
 	{
@@ -55,10 +55,13 @@ void makeDrink(){
 	//Wait for customer to place order
 	sem_wait(orderPlaced);
 
-	//TODO: Wait random time to make drink
 
 	//Show tender is making a drink
 	printf("\t\t\t\t\t\t\t\t\t\t\t| \t\tBartender\n");
+
+	//TODO: Random wait
+
+	sem_post(orderReady);
 }
 
 
@@ -67,7 +70,7 @@ void makeDrink(){
  */
 void receivePayment(){
 
-	//TODO - synchronize
+	
 	//at the register waiting for customer to pay
 	printf("\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\tBartender\n");
 
