@@ -21,6 +21,10 @@
  */
 void* customer(void* args){
 
+	//Seed random number generator
+	srand(time(NULL));
+
+	//Do customer tasks
 	unsigned int *custID = (unsigned int*) args;
 	custTravelToBar(*custID);
 	custArriveAtBar(*custID);
@@ -38,6 +42,14 @@ void* customer(void* args){
 void custTravelToBar(unsigned int custID){
 
 	printf("Cust %u\t\t\t\t\t\t\t\t\t\t\t|\n", custID);
+
+	//Random sleep time for traveling to the bar
+	struct timespec slptm;
+	long randSleep = rand() % 4980; //Random num between 0 and 4980
+	slptm.tv_sec = 0;
+	slptm.tv_nsec = (20 + randSleep) * 1000000; //Sleep for between 20ms and 5000ms
+	nanosleep(&slptm, NULL);
+
 	sem_post(customerHere);
 }
 
@@ -72,12 +84,16 @@ void custPlaceOrder(){
  * The customer in the bar can browse the wall art for a random amount of time between 3ms and 4000ms.
  */
 void custBrowseArt(){
-
-	//TODO: Random wait 
+ 
 	printf("\t\t\t\t\t\tCust %u\t\t\t\t\t|\n", nowServing);
 
-	//Alert tender done browsing
-	sem_post(doneBrowsingArt);
+	//Random wait for browsing art time
+	struct timespec slptm;
+	long randSleep = rand() % 3997; //Random num between 0 and 3997
+	slptm.tv_sec = 0;
+	slptm.tv_nsec = (3 + randSleep) * 1000000; //Sleep for between 5ms and 1000ms
+	nanosleep(&slptm, NULL);
+
 }
 
 
@@ -88,17 +104,23 @@ void custBrowseArt(){
  */
 void custAtRegister(){
 
-	sem_wait(orderReady);
-	//TODO - synchronize
+	//Wait at the register for the bartender to finish mixing the drink
 	printf("\t\t\t\t\t\t\t\tCust %u\t\t\t|\n", nowServing);
+	sem_wait(orderReady);
+
+	//Pay the partender
+	sem_post(paidForDrink);
 }
 
 
 /**
- * The customer in the bar leaves the bar.
+ * The customer in the bar leaves.
  */
 void custLeaveBar(){
 
-	//TODO - synchronize
+	//Wait for bartender to receive payment
+	sem_wait(paymentReceived);
+
 	printf("\t\t\t\t\t\t\t\t\t\tCust %u\t|\n", nowServing);
+	sem_post(customerGone);
 }

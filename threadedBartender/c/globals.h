@@ -16,6 +16,8 @@ sem_t* customerHere;
 sem_t* roomToEnterBar;
 sem_t* orderPlaced;
 sem_t* orderReady;
-sem_t* doneBrowsingArt;
+sem_t* paidForDrink;
+sem_t* paymentReceived;
+sem_t* customerGone;
 
 #endif /* GLOBALS_H_ */

@@ -11,6 +11,8 @@
 #include <unistd.h>
 #include <semaphore.h>
 #include <fcntl.h>
+#include <time.h>
+#include <stdlib.h>
 #include "globals.h"
 #include "bartender.h"
 
@@ -20,6 +22,10 @@
  */
 void* bartender(void* args){
 
+	//Seed random number generator
+	srand(time(NULL));
+
+	//Perform barteding tasks
 	int i;
 	for (i = 0; i<num_threads; i++)
 	{
@@ -59,8 +65,14 @@ void makeDrink(){
 	//Show tender is making a drink
 	printf("\t\t\t\t\t\t\t\t\t\t\t| \t\tBartender\n");
 
-	//TODO: Random wait
+	//Random wait for making drink time
+	struct timespec slptm;
+	long randSleep = rand() % 995; //Random num between 0 and 995
+	slptm.tv_sec = 0;
+	slptm.tv_nsec = (5 + randSleep) * 1000000; //Sleep for between 5ms and 1000ms
+	nanosleep(&slptm, NULL);
 
+	//The order is ready
 	sem_post(orderReady);
 }
 
@@ -70,13 +82,16 @@ void makeDrink(){
  */
 void receivePayment(){
 	
-	//at the register waiting for customer to pay
+	//At the register waiting for customer tofinish browsing art and then pay
 	printf("\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\tBartender\n");
 
-	sem_wait(doneBrowsingArt);
+	//Waiting for customer to pay
+	sem_wait(paidForDrink);
 
-	//got the payment from the right customer!
+	//Got the payment from the right customer!
 	printf("\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\t\t\tBartender\n");
+	sem_post(paymentReceived);
 
-	//Let in another customer
+	//Wait for the customer to leave
+	sem_wait(customerGone);	
 }

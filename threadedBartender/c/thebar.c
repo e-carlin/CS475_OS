@@ -93,16 +93,18 @@ void init()
 	sem_unlink("/roomToEnterBar");
 	sem_unlink("/orderPlaced");
 	sem_unlink("/orderReady");
-	sem_unlink("/doneBrowsingArt");
-	// sem_unlink("/");
+	sem_unlink("/paidForDrink");
+	sem_unlink("/paymentReceived");
+	sem_unlink("/customerGone");
 
 	//Create semaphores
 	customerHere = sem_open("/customerHere", O_CREAT, 0600, 0);
 	roomToEnterBar = sem_open("/roomToEnterBar", O_CREAT, 0600, 0);
 	orderPlaced = sem_open("/orderPlaced", O_CREAT, 0600, 0);
 	orderReady = sem_open("/orderReady", O_CREAT, 0600, 0);
-	doneBrowsingArt = sem_open("/doneBrowsingArt", O_CREAT, 0600, 0);
-	// = sem_open("/", O_CREAT, 0600, 0);
+	paidForDrink = sem_open("/paidForDrink", O_CREAT, 0600, 0);
+	paymentReceived = sem_open("/paymentReceived", O_CREAT, 0600, 0);
+	customerGone = sem_open("/customerGone", O_CREAT, 0600, 0);
 }
 
 
@@ -115,13 +117,15 @@ void cleanup()
 	sem_close(roomToEnterBar);
 	sem_close(orderPlaced);
 	sem_close(orderReady);
-	sem_close(doneBrowsingArt);
-	// sem_close();
+	sem_close(paidForDrink);
+	sem_close(paymentReceived);
+	sem_close(customerGone);
 
 	sem_unlink("/customerHere");
 	sem_unlink("/roomToEnterBar");
 	sem_unlink("/orderPlaced");
 	sem_unlink("/orderReady");
-	sem_unlink("/doneBrowsingArt");
-	// sem_unlink("/");
+	sem_unlink("/paidForDrink");
+	sem_unlink("/paymentReceived");
+	sem_unlink("/customerGone");
 }
