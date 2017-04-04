@@ -1,3 +1,5 @@
+import java.util.concurrent.Semaphore;
+
 public class TheBar {
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -18,15 +20,43 @@ public class TheBar {
                 + "---------------------------------------------+--------"
                 + "-------------------------------------------------------------------");
 
-        Thread emp = new Bartender();
+
+        //Declare semaphores
+        Semaphore customerHere = new Semaphore(0);
+        Semaphore roomToEnter = new Semaphore(0);
+        Semaphore orderPlaced = new Semaphore(0);
+        Semaphore orderReady = new Semaphore(0);
+        Semaphore paidForDrink = new Semaphore(0);
+        Semaphore paymentReceived = new Semaphore(0);
+        Semaphore customerGone = new Semaphore(0);
+
+
+        Thread emp = new Bartender(customerHere,
+                roomToEnter,
+                orderPlaced,
+                orderReady,
+                paidForDrink,
+                paymentReceived,
+                customerGone);
+
         emp.start();
 
         Thread[] custs = new Thread[num];
         for (int i = 0; i < num; i++) {
-            custs[i] = new Customer(i);
+
+            custs[i] = new Customer(i,
+                    customerHere,
+                    roomToEnter,
+                    orderPlaced,
+                    orderReady,
+                    paidForDrink,
+                    paymentReceived,
+                    customerGone);
+
             custs[i].start();
         }
         for (int i = 0; i < num; i++) {
+
             try {
                 custs[i].join();
             } catch (InterruptedException e) {

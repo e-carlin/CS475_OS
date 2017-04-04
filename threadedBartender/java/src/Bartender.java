@@ -1,27 +1,74 @@
+import java.util.concurrent.Semaphore;
+
 public class Bartender extends Thread {
 
+        Semaphore customerHere;
+        Semaphore roomToEnter;
+        Semaphore orderPlaced;
+        Semaphore orderReady;
+        Semaphore padiForDrink;
+        Semaphore paymentReceived;
+        Semaphore customerGone;
+
+        public Bartender(Semaphore customerHere, Semaphore roomToEnter, Semaphore orderPlaced, Semaphore orderReady, Semaphore paidForDrink, Semaphore paymentReceived, Semaphore customerGone){
+            this.customerHere = customerHere;
+            this.roomToEnter = roomToEnter;
+            this.orderPlaced = orderPlaced;
+            this.orderReady = orderReady;
+            this.padiForDrink = paidForDrink;
+            this.paymentReceived = paymentReceived;
+            this.customerGone = customerGone;
+        }
     public void run() {
         while (true) {
-            waitForCustomer();
-            mixDrink();
-            atCashRegister();
-            paymentAccepted();
+            try {
+                waitForCustomer();
+                mixDrink();
+                atCashRegister();
+                paymentAccepted();
+            }
+            catch( InterruptedException e){
+                System.out.println("Bartender interrupted: "+e);
+                System.exit(1);
+            }
         }
     }
 
-    private void waitForCustomer() {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t| src.Bartender");
+    private void waitForCustomer() throws InterruptedException {
+
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t| src.Bartender");
+
+        this.customerHere.acquire();
     }
 
-    private void mixDrink() {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t| \t\tsrc.Bartender");
+    private void mixDrink() throws InterruptedException {
+
+            this.roomToEnter.release();
+
+            this.orderPlaced.acquire();
+
+            System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t| \t\tsrc.Bartender");
+
+            //TODO: Sleep for time to mix drink
+
+            //Order is ready
+            this.orderReady.release();
     }
 
-    private void atCashRegister() {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\t\tsrc.Bartender");
+    private void atCashRegister() throws InterruptedException {
+
+            System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\t\tsrc.Bartender");
+
+            //Wait for customer to pay
+            padiForDrink.acquire();
     }
 
-    private void paymentAccepted() {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\t\t\t\tsrc.Bartender");
+    private void paymentAccepted() throws InterruptedException {
+
+            System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\t\t\t\tsrc.Bartender");
+
+            paymentReceived.release();
+
+            customerGone.acquire();
     }
 }
