@@ -92,8 +92,8 @@ void init()
 	sem_unlink("/customerHere");
 	sem_unlink("/roomToEnterBar");
 	sem_unlink("/orderPlaced");
-	// sem_unlink("/");
-	// sem_unlink("/");
+	sem_unlink("/orderReady");
+	sem_unlink("/doneBrowsingArt");
 	// sem_unlink("/");
 
 	//Create semaphores
@@ -101,7 +101,7 @@ void init()
 	roomToEnterBar = sem_open("/roomToEnterBar", O_CREAT, 0600, 0);
 	orderPlaced = sem_open("/orderPlaced", O_CREAT, 0600, 0);
 	orderReady = sem_open("/orderReady", O_CREAT, 0600, 0);
-	// = sem_open("/", O_CREAT, 0600, 0);
+	doneBrowsingArt = sem_open("/doneBrowsingArt", O_CREAT, 0600, 0);
 	// = sem_open("/", O_CREAT, 0600, 0);
 }
 
@@ -115,13 +115,13 @@ void cleanup()
 	sem_close(roomToEnterBar);
 	sem_close(orderPlaced);
 	sem_close(orderReady);
-	// sem_close();
+	sem_close(doneBrowsingArt);
 	// sem_close();
 
 	sem_unlink("/customerHere");
 	sem_unlink("/roomToEnterBar");
 	sem_unlink("/orderPlaced");
 	sem_unlink("/orderReady");
-	// sem_unlink("/");
+	sem_unlink("/doneBrowsingArt");
 	// sem_unlink("/");
 }

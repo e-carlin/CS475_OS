@@ -69,10 +69,11 @@ void makeDrink(){
  * Gets payment from the correct customer
  */
 void receivePayment(){
-
 	
 	//at the register waiting for customer to pay
 	printf("\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\tBartender\n");
+
+	sem_wait(doneBrowsingArt);
 
 	//got the payment from the right customer!
 	printf("\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\t\t\tBartender\n");

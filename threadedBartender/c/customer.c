@@ -73,8 +73,11 @@ void custPlaceOrder(){
  */
 void custBrowseArt(){
 
-	//TODO - synchronize
+	//TODO: Random wait 
 	printf("\t\t\t\t\t\tCust %u\t\t\t\t\t|\n", nowServing);
+
+	//Alert tender done browsing
+	sem_post(doneBrowsingArt);
 }
 
 
