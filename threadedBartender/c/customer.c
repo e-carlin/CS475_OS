@@ -15,6 +15,7 @@
 #include "globals.h"
 #include "customer.h"
 
+
 /**
  * This is what the thread will call.
  * Do not touch.
@@ -44,11 +45,7 @@ void custTravelToBar(unsigned int custID){
 	printf("Cust %u\t\t\t\t\t\t\t\t\t\t\t|\n", custID);
 
 	//Random sleep time for traveling to the bar
-	struct timespec slptm;
-	long randSleep = rand() % 4980; //Random num between 0 and 4980
-	slptm.tv_sec = 0;
-	slptm.tv_nsec = (20 + randSleep) * 1000000; //Sleep for between 20ms and 5000ms
-	nanosleep(&slptm, NULL);
+	msSleep(20, 5000);
 
 	sem_post(customerHere);
 }
@@ -88,11 +85,7 @@ void custBrowseArt(){
 	printf("\t\t\t\t\t\tCust %u\t\t\t\t\t|\n", nowServing);
 
 	//Random wait for browsing art time
-	struct timespec slptm;
-	long randSleep = rand() % 3997; //Random num between 0 and 3997
-	slptm.tv_sec = 0;
-	slptm.tv_nsec = (3 + randSleep) * 1000000; //Sleep for between 5ms and 1000ms
-	nanosleep(&slptm, NULL);
+	msSleep(3, 4000);
 
 }
 

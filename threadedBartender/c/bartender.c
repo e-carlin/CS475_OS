@@ -66,11 +66,7 @@ void makeDrink(){
 	printf("\t\t\t\t\t\t\t\t\t\t\t| \t\tBartender\n");
 
 	//Random wait for making drink time
-	struct timespec slptm;
-	long randSleep = rand() % 995; //Random num between 0 and 995
-	slptm.tv_sec = 0;
-	slptm.tv_nsec = (5 + randSleep) * 1000000; //Sleep for between 5ms and 1000ms
-	nanosleep(&slptm, NULL);
+	msSleep(5, 1000);
 
 	//The order is ready
 	sem_post(orderReady);
