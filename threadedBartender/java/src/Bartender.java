@@ -1,4 +1,3 @@
-
 public class Bartender extends Thread {
 
     public void run() {
@@ -11,18 +10,18 @@ public class Bartender extends Thread {
     }
 
     private void waitForCustomer() {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t| Bartender");
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t| src.Bartender");
     }
 
     private void mixDrink() {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t| \t\tBartender");
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t| \t\tsrc.Bartender");
     }
 
     private void atCashRegister() {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\t\tBartender");
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\t\tsrc.Bartender");
     }
 
     private void paymentAccepted() {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\t\t\t\tBartender");
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t| \t\t\t\t\t\t\tsrc.Bartender");
     }
 }
