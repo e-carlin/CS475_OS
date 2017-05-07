@@ -33,7 +33,12 @@ void create_tables(int num_pages, int num_frames){
 
     page_table = (PTE*) malloc(sizeof(PTE*) * num_pages);
     frame_table = (FTE*) malloc(sizeof(FTE*) * num_frames);
-    page_table[0] = 5;
+
+    int i;
+    // Set each frame to free (first bit set to 1)
+    for(i = 0; i < num_frmaes; i++){
+        frame_table[i] = 0x80000000;
+    }
 }
 
 
@@ -99,6 +104,12 @@ void get_phys_addr(int page_num){
 }
 
 int get_frame_num(int page_num){
+    // TODO
 
     return -1;
+}
+
+
+void print_page_table(PTE * page_table){
+    
 }
