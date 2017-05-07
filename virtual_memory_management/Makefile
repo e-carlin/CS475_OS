@@ -1,5 +1,5 @@
 all:  vmm.o main.c 
-	gcc -Wall -o vmm main.c vmm.o
+	gcc -Wall -o vmm main.c vmm.o -lm
 
 
 vmm.o: vmm.c

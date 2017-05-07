@@ -9,10 +9,6 @@
 int main(int argc, char *argv[]){
 
 	// Command line args
-	int num_pages = 8;
-	int num_frames = 4;
-	int block_size = 1024;
-	char *rep_policy = "random";
 	char *inst_file_path = "/home/xinu/CS475_OS/virtual_memory_management/input.txt";
 
 	// This MUST happen before any process of the instruction occurs
