@@ -12,5 +12,13 @@ void process_inst(char * inst);
 void create_tables(int num_pages, int num_frames);
 int get_page_num(int virt_addr);
 void get_phys_addr(int page_num);
-int get_frame_num(int page_num);
-void print_page_table(PTE * page_table);
+void allocate_frame(int page_num);
+
+/** Replacement policies **/
+int run_replacement_policy();
+int random_replacement();
+int fifo_replacement();
+
+/** Printing **/
+void print_frame_table();
+void print_page_table();
