@@ -21,7 +21,7 @@ void	printqueue(struct queue *q)
 			printf(", ");
 		}
 	}
-	printf("]");
+	printf("]\n");
 }
 
 /**
